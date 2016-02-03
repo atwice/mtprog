@@ -48,3 +48,12 @@ struct message {
 }
 ```
 Получите его и сохраните в */home/box/message.txt*
+
+
+
+## Mesage Queue POSIX
+
+Создайте очередь сообщения POSIX с именем: */test.mq*
+Тестовая среда пошлет в нее сообщение.
+
+Получите его и сохраните в */home/box/message.txt*
