@@ -7,9 +7,9 @@ Tasks for stepic.org course "Multithreading Programming
 Задача на безымянные каналы.
 
 Пусть есть длинная команда вида:
-'''
+```
 who | sort | uniq -c | sort -nk1
-'''
+```
 
 Надо её прочитать из STDIN, выполнить и STDOUT записать в файл */home/box/result.out*.
 
@@ -34,3 +34,17 @@ who | sort | uniq -c | sort -nk1
 Вторя линия - тупо эхо-сервер.
 
 
+## Message Queue sysV
+
+Создайте очередь сообщения SysV с ключем:
+```
+key_t key = ftok("/tmp/msg.temp", 0);
+```
+Тестовая среда пошлет в нее сообщение.
+```
+struct message {
+    long mtype;
+    char mtext[80];
+}
+```
+Получите его и сохраните в */home/box/message.txt*
