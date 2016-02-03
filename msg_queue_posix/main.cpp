@@ -6,14 +6,25 @@
 #include <sys/stat.h>
 #include <mqueue.h>
 
+const char* mq_name = "/test.mq";
 
 int main()
 {
-	mqd_t mq = mq_open( "/test.mq", O_CREAT | O_RDONLY, 0666, 0 );
+	if( 0 == mq_unlink( mq_name ) ) {
+		printf( "Message queue was removed\n" );
+	}
+	
+	mq_attr attr;
+	attr.mq_flags = 0;
+	attr.mq_maxmsg = 10;
+	attr.mq_msgsize = 128;
+	attr.mq_curmsgs = 0;
+	
+	mqd_t mq = mq_open( mq_name, O_CREAT | O_RDWR, 0666, &attr );
 
-	char buffer[4096];
-	memset(  buffer, 0, 4096 );
-	size_t size = mq_receive( mq, buffer, 4096, 0 );
+	char buffer[256];
+	memset(  buffer, 0, 256 );
+	size_t size = mq_receive( mq, buffer, 256, 0 );
 
 
 	int fd = open( "/home/box/message.txt", O_CREAT | O_WRONLY | O_TRUNC, 0666  );
@@ -22,6 +33,6 @@ int main()
 	}
 	write( fd, buffer, size );
 	close( fd );
-	mq_unlink( "/test.mq" );
+	mq_unlink( mq_name );
 	return 0;
 }
